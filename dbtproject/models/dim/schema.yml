@@ -1,0 +1,67 @@
+
+version: 2
+
+sources:
+  - name: stg_src_to_dims
+    database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
+    schema: stg  
+    tables:
+      - name: calendar
+      - name: payment_type
+      - name: rate_code
+      - name: taxi_zone
+      - name: vendor
+
+models:
+  - name: dtaxizone
+    description: "Taxi Zone Dimesion"
+    columns:
+      - name: LocationID
+        description: "LocationID"
+        tests:
+          - not_null
+      - name: Borough
+        description: "Borough"
+        tests:
+          - not_null
+      - name: Zone
+        description: "Zone"
+        tests:
+          - not_null
+      - name: service_zone
+        description: "service_zone"
+        tests:
+          - not_null
+  - name: dpaymenttype
+    description: "Payment Type Dimesion"
+    columns:
+      - name: payment_type
+        description: "Payment Type code"
+        tests:
+          - not_null
+      - name: payment_type_desc
+        description: "Payment Type Description"
+        tests:
+          - not_null
+  - name: dratecode
+    description: "Rate Code Dimesion"
+    columns:
+      - name: rate_code_id
+        description: "Rate Code code"
+        tests:
+          - not_null
+      - name: rate_code
+        description: "Rate Code Description"
+        tests:
+          - not_null
+  - name: dvendor
+    description: "Vendor Dimesion"
+    columns:
+      - name: vendor_id
+        description: "Vendor code"
+        tests:
+          - not_null
+      - name: vendor_name
+        description: "Vendor Name"
+        tests:
+          - not_null

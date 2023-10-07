@@ -1,0 +1,30 @@
+
+version: 2
+
+sources:
+  - name: dim_src_to_agg
+    database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
+    schema: dim  
+    tables:
+      - name: dcalendar
+
+models:
+  - name: trip_pattern_week
+    description: "Fact Trip Pattern"
+    columns:
+      - name: PUDateKey
+        description: "Pick up DateKey"
+        tests:
+          - not_null
+      - name: LocationID
+        description: "Location Key ID"
+        tests:
+          - not_null
+      - name: passenger_count
+        description: "Passenger quantity per granularity"
+        tests:
+          - not_null
+      - name: trip_distance
+        description: "Trip Distance"
+        tests:
+          - not_null

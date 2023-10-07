@@ -1,0 +1,36 @@
+
+version: 2
+
+sources:
+  - name: stg_src_to_facts
+    database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
+    schema: stg  
+    tables:
+      - name: trip_data
+  - name: dim_src_to_facts
+    database: "{{ env_var('DBT_SYNAPSE_DATABASE') }}"
+    schema: dim  
+    tables:
+      - name: dcalendar
+      - name: dtaxizone
+
+models:
+  - name: trip_pattern
+    description: "Fact Trip Pattern"
+    columns:
+      - name: PUDateKey
+        description: "Pick up DateKey"
+        tests:
+          - not_null
+      - name: LocationID
+        description: "Location Key ID"
+        tests:
+          - not_null
+      - name: passenger_count
+        description: "Passenger quantity per granularity"
+        tests:
+          - not_null
+      - name: trip_distance
+        description: "Trip Distance"
+        tests:
+          - not_null
